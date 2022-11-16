@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "635a0c0b64a6d231228942ae01",
+    "name": "John Morris",
+    "img": "https://i.ibb.co/N11htBN/1.jpg",
+    "designation": "Electrical Engineer",
+    "description": "Expert Electrical engineer. He has the working experience of 15 years in this company"
+  },
+  {
+    "_id": "635a0c0b64a6d231228942ae012",
+    "name": "Morris Curtis",
+    "img": "https://i.ibb.co/SxCdWMv/2.jpg",
+    "designation": "Mechanical Engineer",
+    "description": "Expert Mechanical engineer. He has the working experience of 10 years in this company"
+  },
+  {
+    "_id": "635a0c0b64a6d231228942ae03",
+    "name": "John Abraham",
+    "img": "https://i.ibb.co/99VQgYg/3.jpg",
+    "designation": "Mechanical Engineer",
+    "description": "Expert Mechanical engineer. He has the working experience of 10 years in this company"
+  }
+]

@@ -1,0 +1,22 @@
+import React from "react";
+
+const ProductsCard = ({ product }) => {
+  const { title, img, price, description } = product;
+  return (
+    <div className="card card-compact w-full bg-base-100 shadow-xl">
+      <figure>
+        <img src={img} style={{ height: "400px", width: "100%" }} alt="Shoes" />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{title}</h2>
+        <p>{description.slice(0, 110)} ...</p>
+        <p className="text-2xl text-bold text-orange-500">Price: $ {price}</p>
+        <div className="card-actions justify-end">
+          <button className="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductsCard;
