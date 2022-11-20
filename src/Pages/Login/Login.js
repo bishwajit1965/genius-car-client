@@ -19,8 +19,10 @@ const Login = () => {
     logIn(email, password)
       .then((result) => {
         const user = result.user;
-        setSuccess(true);
-        console.log(user);
+        if (result) {
+          setSuccess(true);
+          form.reset();
+        }
       })
       .catch((error) => {
         console.error(error);

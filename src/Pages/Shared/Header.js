@@ -1,13 +1,35 @@
-import React from "react";
+import { getAuth } from "firebase/auth";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+
 const Header = () => {
+  const auth = getAuth();
+  const { logout } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logout()
+      .then(() => {})
+      .then((error) => {
+        console.error(error);
+      });
+  };
   const menuItems = (
     <>
       <li className="font-semi-bold">
         <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
+        {auth.currentUser ? (
+          <>
+            <Link onClick={handleLogOut}>Logout</Link>
+            <Link to="/orders">Orders</Link>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+          </>
+        )}
       </li>
     </>
   );

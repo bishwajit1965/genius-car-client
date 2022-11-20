@@ -6,11 +6,10 @@ import Services from "../Services/Services";
 import MoreServices from "../MoreServices/MoreServices";
 import Team from "../Team/Team";
 import ChooseUs from "../ChooseUs/ChooseUs";
- 
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Banner />
       <About />
       <Services />
@@ -18,8 +17,7 @@ const Home = () => {
       <Products />
       <Team />
       <ChooseUs />
-
-    </div>
+    </>
   );
 };
 

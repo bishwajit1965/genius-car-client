@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Pages/Shared/Footer/Footer";
 import Header from "../Pages/Shared/Header";
 
-const Main = () => {
+const Layout = () => {
   return (
     <div>
       <Header />
@@ -13,4 +13,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Layout;

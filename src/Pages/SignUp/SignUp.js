@@ -28,7 +28,6 @@ const SignUp = () => {
       .catch((error) => {
         console.error(error);
       });
-    console.log(user);
   };
 
   return (
