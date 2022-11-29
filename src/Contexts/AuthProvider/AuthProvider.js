@@ -5,11 +5,15 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import app from "../../Firebase/Firebase.config";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
+
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -24,12 +28,19 @@ const AuthProvider = ({ children }) => {
   // Login using email and password
   const logIn = (email, password) => {
     setLoading(true);
-    signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  // Google sign in
+  const googleSignIn = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
   };
 
   // Logout
   const logout = () => {
-    signOut(auth);
+    localStorage.removeItem("genius-car-token");
+    return signOut(auth);
   };
 
   // Observer
@@ -37,14 +48,14 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
       setUser(currentUser);
-      loading(false);
+      setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
   }, [loading]);
 
-  const authInfo = { user, loading, createUser, logIn, logout };
+  const authInfo = { user, loading, createUser, logIn, logout, googleSignIn };
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

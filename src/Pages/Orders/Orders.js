@@ -1,17 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 import OrderRow from "./OrderRow";
+import "./Orders.css";
 
 const Orders = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   let id = 1;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}`)
-      .then((response) => response.json())
-      .then((data) => setOrders(data));
-  }, [user?.email]);
+    fetch(
+      `https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/orders?email=${user?.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("genius-car-token")}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (response.status === 401 || response.status === 403) {
+          localStorage.removeItem("genius-car-token");
+          return logout();
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setOrders(data);
+      });
+  }, [user?.email, logout]);
 
   // Will update status in database
   const handleStatusUpdate = (id) => {
@@ -19,13 +35,17 @@ const Orders = () => {
       "Do you want to update status?"
     );
     if (agreedToUpdateStatus) {
-      fetch(`http://localhost:5000/orders/${id}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({ status: "Approved" }),
-      })
+      fetch(
+        `https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/orders/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem("genius-car-token")}`,
+          },
+          body: JSON.stringify({ status: "Approved" }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -46,9 +66,15 @@ const Orders = () => {
       "Are you sure of deleting this data?"
     );
     if (agreedToDelete) {
-      fetch(`http://localhost:5000/orders/${id}`, {
-        method: "DELETE",
-      })
+      fetch(
+        `https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/orders/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("genius-car-token")}`,
+          },
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);

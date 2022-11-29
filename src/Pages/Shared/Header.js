@@ -1,12 +1,10 @@
-import { getAuth } from "firebase/auth";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 const Header = () => {
-  const auth = getAuth();
-  const { logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   const handleLogOut = () => {
     logout()
@@ -19,10 +17,10 @@ const Header = () => {
     <>
       <li className="font-semi-bold">
         <Link to="/">Home</Link>
-        {auth.currentUser ? (
+        {user?.email ? (
           <>
-            <Link onClick={handleLogOut}>Logout</Link>
             <Link to="/orders">Orders</Link>
+            <Link onClick={handleLogOut}>Logout</Link>
           </>
         ) : (
           <>

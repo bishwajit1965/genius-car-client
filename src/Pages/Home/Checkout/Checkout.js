@@ -23,6 +23,7 @@ const Checkout = () => {
       phone,
       message,
     };
+
     // Validation
     if (phone.length < 11) {
       toast.warning("Phone at least 11 characters", {
@@ -30,13 +31,18 @@ const Checkout = () => {
       });
       return;
     }
-    fetch("http://localhost:5000/orders", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(order),
-    })
+
+    fetch(
+      "https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/orders",
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("genius-car-token")}`,
+        },
+        body: JSON.stringify(order),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -49,6 +55,7 @@ const Checkout = () => {
       })
       .catch((error) => console.error(error));
   };
+
   return (
     <>
       <ToastContainer

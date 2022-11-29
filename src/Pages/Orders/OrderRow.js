@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Orders.css";
 
 const OrderRow = ({ order, id, handleDelete, handleStatusUpdate }) => {
   const { _id, ServiceName, Customer, email, price, phone, Service, status } =
@@ -7,7 +8,9 @@ const OrderRow = ({ order, id, handleDelete, handleStatusUpdate }) => {
 
   // Will fetch image from services table
   useEffect(() => {
-    fetch(`http://localhost:5000/services/${Service}`)
+    fetch(
+      `https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/services/${Service}`
+    )
       .then((response) => response.json())
       .then((data) => setOrderService(data));
   }, [Service]);
@@ -17,7 +20,7 @@ const OrderRow = ({ order, id, handleDelete, handleStatusUpdate }) => {
       <th>{id}</th>
       <td>
         <div className="avatar">
-          <div className="avatar rounded w-24 h-20">
+          <div className="avatar rounded w-24 h-20 shadow-lg">
             {orderService?.img && (
               <img
                 src={orderService?.img}
@@ -33,10 +36,7 @@ const OrderRow = ({ order, id, handleDelete, handleStatusUpdate }) => {
       <td>{price}</td>
       <td>{phone}</td>
       <td>
-        <button
-          onClick={() => handleStatusUpdate(_id)}
-          className="btn btn-sm btn-success"
-        >
+        <button onClick={() => handleStatusUpdate(_id)}>
           {status ? status : "pending"}
         </button>
       </td>

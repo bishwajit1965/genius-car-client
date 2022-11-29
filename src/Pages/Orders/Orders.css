@@ -1,0 +1,15 @@
+.approved{
+    background-color: #049641;
+    padding: 0.3rem 0.5rem;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+
+}
+.pending{
+    background-color: #0be4c0;
+    padding: 0.3rem 0.5rem;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+}

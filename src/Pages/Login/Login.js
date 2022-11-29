@@ -1,12 +1,15 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImage from "../../assets/images/login/login.svg";
 import { FaFacebook, FaLinkedin, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
+import Social from "../Social/Social";
 
 const Login = () => {
   const { logIn } = useContext(AuthContext);
-  const [success, setSuccess] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location?.state?.from?.pathname || "/";
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -14,15 +17,35 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    setSuccess(false);
 
     logIn(email, password)
       .then((result) => {
         const user = result.user;
-        if (result) {
-          setSuccess(true);
-          form.reset();
-        }
+        console.log(user.email);
+        const currentUser = {
+          email: user.email,
+        };
+        console.log(currentUser);
+
+        // Get JWT
+        fetch(
+          "https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/jwt",
+          // "https://genius-car-server-neon.vercel.app/jwt",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(currentUser),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // Local storage is the easiest but not the best option
+            localStorage.setItem("genius-car-token", data.token);
+            navigate(from, { replace: true });
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -71,11 +94,6 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            {success && (
-              <p>
-                <small>Login successful!!!</small>
-              </p>
-            )}
 
             <div className="sign-up-options py-3">
               <p className="text-center mb-2">Or Sign Up with</p>
@@ -98,6 +116,7 @@ const Login = () => {
                 Sign up
               </Link>
             </p>
+            <Social />
           </div>
         </div>
       </div>

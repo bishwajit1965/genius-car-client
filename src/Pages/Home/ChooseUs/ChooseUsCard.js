@@ -1,7 +1,7 @@
 import React from "react";
 
 const ChooseUsCard = ({ choose }) => {
-  const { title, img, description } = choose;
+  const { title, description } = choose;
   return (
     <div className="card card-compact  bg-base-100 shadow-xl">
       <div className="card-body">

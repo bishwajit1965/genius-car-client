@@ -4,10 +4,13 @@ import ServiceCard from "./ServiceCard";
 const Services = () => {
   const [services, setServices] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/services")
+    fetch(
+      "https://genius-car-server-2i9prbc5j-paulbishwajit09-gmailcom.vercel.app/services"
+    )
       .then((response) => response.json())
       .then((data) => setServices(data));
   }, []);
+
   return (
     <div className="py-10">
       <div className="text-center py-10">
